@@ -19,7 +19,7 @@ var postSession = function(req, res){
   //saves a new bike session to the data base.
   var newBikeSession = new BikeSession({
     createdAt: Date.now(),
-    distance: req.body.distance
+    rotations: req.body.rotations
   });
   newBikeSession.save(function(err){
     if(err){
