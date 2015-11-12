@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var favicon = require('serve-favicon');
 
 //routes
+var ParseData = require('./routes/parseData.js');
 var BikeSession = require('./routes/bikeSession.js');
 
 //port configuration for heroku
@@ -32,6 +33,7 @@ app.get('/dashboard', function(req, res){
 });
 
 //API routes
+app.get('/userStats', ParseData.getUserStats);
 app.get('/bikeSession', BikeSession.getSessions);
 app.post('/bikeSession', BikeSession.postSession);
 
