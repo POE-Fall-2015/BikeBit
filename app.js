@@ -39,10 +39,10 @@ app.get('/userStats', ParseData.getUserStats);
 app.get('/bikeSession', BikeSession.getSessions);
 app.post('/bikeSession', BikeSession.postSession);
 
-app.get('/user', User.getSessions);
-app.post('/user', User.postSession);
-app.put('/user', User.putSession);
-app.patch('/user', User.patchSession);
+app.get('/user', User.getUser);
+app.post('/user', User.postUser);
+app.put('/user', User.putUser);
+app.patch('/user', User.patchUser);
 
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);

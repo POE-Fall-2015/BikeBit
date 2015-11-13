@@ -1,21 +1,33 @@
 var path = require('path');
 var User = require('../models/userModel.js').user;
 
-var getSessions = function(req, res){
+var getUser = function(req, res){
   //returns all bike sessions saved in database
-  User.find({}).exec(function (err, users) {
-    if (err) {
-      console.error("/routes/user.js GET error");
-      console.log(err);
-      res.status(500).send("Could not find users!");
-    }
-    else {
-      res.status(200).send(users); 
-    }
-  });
+  username = null;
+  query_parms = {};
+  if (req.body.username) {
+      username = req.body.username;
+  } else if (req.query.username) {
+      username = req.query.username;
+  }
+  if (username) {
+      query_parms["username"] = username;
+  }
+//    User.find(query_parms).remove().exec();
+//    res.status(200).send("Success!");
+    User.find(query_parms).exec(function (err, users) {
+        if (err) {
+          console.error("/routes/user.js GET error");
+          console.log(err);
+          res.status(500).send("Could not find users!");
+        }
+        else {
+          res.status(200).send(users); 
+        }
+    });
 };
 
-var postSession = function(req, res){
+var postUser = function(req, res){
   //saves a new bike session to the data base.
   var newUser = new User({
     username: req.body.username,
@@ -24,6 +36,7 @@ var postSession = function(req, res){
     wheelSize: req.body.wheelSize,
     goalUnits: req.body.goalUnits,
     override: req.body.override,
+    blockedDomains: req.body.blockedDomains,
     createdAt: Date.now(),
     updatedAt: Date.now()
   });
@@ -38,9 +51,20 @@ var postSession = function(req, res){
   });
 };
 
-var putSession = function(req, res){
-  //saves a new bike session to the data base.  
-    User.find({}).exec(function (err, users) {
+var putUser = function(req, res){
+  //saves a new bike session to the data base.
+    username = null;
+    query_parms = {};
+    if (req.body.username) {
+      username = req.body.username;
+    } else if (req.query.username) {
+      username = req.query.username;
+    }
+    if (username) {
+      query_parms["username"] = username;
+    }
+    
+    User.find(query_parms).exec(function (err, users) {
     if (err) {
       console.error("/routes/user.js GET error");
       console.log(err);
@@ -66,6 +90,9 @@ var putSession = function(req, res){
       if (req.body.override) {
           user.override = req.body.override;
       }
+      if (req.body.blockedDomains) {
+          user.blockedDomains = req.body.blockedDomains;
+      }
       user.updatedAt = Date.now();
       user.save(function(err) {
             if (err) {
@@ -79,53 +106,11 @@ var putSession = function(req, res){
       }
     });
 };
-
-var patchSession = function(req, res){
-  //saves a new bike session to the data base.  
-    User.find({}).exec(function (err, users) {
-    if (err) {
-      console.error("/routes/user.js PATCH error");
-      console.log(err);
-      res.status(500).send("Could not find users!");
-    }
-    else {
-      user = users[0];
-      if (req.body.username) {
-          user.username = req.body.username;
-      }
-      if (req.body.goalDistance) {
-          user.goalDistance = req.body.goalDistance;
-      }
-      if (req.body.goalRate) {
-          user.goalRate = req.body.goalRate;
-      }
-      if (req.body.wheelSize) {
-          user.wheelSize = req.body.wheelSize;
-      }
-      if (req.body.goalUnits) {
-          user.goalUnits = req.body.goalUnits;
-      }
-      if (req.body.override) {
-          user.override = req.body.override;
-      }
-      user.updatedAt = Date.now();
-      user.save(function(err) {
-            if (err) {
-              console.error("/routes/user.js PATCH error");
-              console.log(err);
-              res.status(500).send("Could not PATCH user!");
-            } else {
-              res.status(200).send(user.toJSON());
-            }
-        });
-      }
-    });
-};
                        
 
-module.exports.getSessions = getSessions;
-module.exports.postSession = postSession;
-module.exports.putSession = putSession;
-module.exports.patchSession = patchSession;
+module.exports.getUser = getUser;
+module.exports.postUser = postUser;
+module.exports.putUser = putUser;
+module.exports.patchUser = putUser;
 
 
