@@ -1,10 +1,5 @@
 var BikeSession = require('../models/bikeSessionModel.js').bikeSession;
 
-function randInt(min,max)
-{
-  return Math.floor(Math.random()*(max-min+1)+min);
-}
-
 function getMinDate() {
   return new Date(-8640000000000000);
 }
