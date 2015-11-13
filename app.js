@@ -42,6 +42,7 @@ app.post('/bikeSession', BikeSession.postSession);
 app.get('/user', User.getSessions);
 app.post('/user', User.postSession);
 app.put('/user', User.putSession);
+app.patch('/user', User.patchSession);
 
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);

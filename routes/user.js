@@ -79,9 +79,53 @@ var putSession = function(req, res){
       }
     });
 };
+
+var patchSession = function(req, res){
+  //saves a new bike session to the data base.  
+    User.find({}).exec(function (err, users) {
+    if (err) {
+      console.error("/routes/user.js PATCH error");
+      console.log(err);
+      res.status(500).send("Could not find users!");
+    }
+    else {
+      user = users[0];
+      if (req.body.username) {
+          user.username = req.body.username;
+      }
+      if (req.body.goalDistance) {
+          user.goalDistance = req.body.goalDistance;
+      }
+      if (req.body.goalRate) {
+          user.goalRate = req.body.goalRate;
+      }
+      if (req.body.wheelSize) {
+          user.wheelSize = req.body.wheelSize;
+      }
+      if (req.body.goalUnits) {
+          user.goalUnits = req.body.goalUnits;
+      }
+      if (req.body.override) {
+          user.override = req.body.override;
+      }
+      user.updatedAt = Date.now();
+      user.save(function(err) {
+            if (err) {
+              console.error("/routes/user.js PATCH error");
+              console.log(err);
+              res.status(500).send("Could not PATCH user!");
+            } else {
+              res.status(200).send(user.toJSON());
+            }
+        });
+      }
+    });
+};
                        
 
 module.exports.getSessions = getSessions;
 module.exports.postSession = postSession;
 module.exports.putSession = putSession;
+module.exports.patchSession = patchSession;
+
 
