@@ -106,11 +106,40 @@ var putUser = function(req, res){
       }
     });
 };
+
+var deleteUser = function(req, res){
+  //returns all bike sessions saved in database
+  username = null;
+  query_parms = {};
+  if (req.body.username) {
+      username = req.body.username;
+  } else if (req.query.username) {
+      username = req.query.username;
+  }
+  if (username) {
+      query_parms["username"] = username;
+  }
+    User.find(query_parms).remove().exec(function (err) {
+        var resp = {};
+        if (err) {
+          resp["success"] = true;
+          var json_resp = JSON.stringify(resp);
+          res.status(500).send(json_resp);
+        }
+        else {
+          resp["success"] = false;
+          var json_resp = JSON.stringify(resp);
+          res.status(200).send(json_resp); 
+        }
+    });
+};
                        
 
 module.exports.getUser = getUser;
 module.exports.postUser = postUser;
 module.exports.putUser = putUser;
 module.exports.patchUser = putUser;
+module.exports.deleteUser = deleteUser;
+
 
 

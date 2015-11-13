@@ -43,6 +43,8 @@ app.get('/user', User.getUser);
 app.post('/user', User.postUser);
 app.put('/user', User.putUser);
 app.patch('/user', User.patchUser);
+app.delete('/user', User.deleteUser);
+
 
 app.listen(PORT, function() {
   console.log("Application running on port:", PORT);
