@@ -22,10 +22,9 @@
     var blockedSites = data.users.blockedDomains;
 
     for(var i = 0; i < blockedSites.length; i++){
-      console.log(blockedSites[i]);
-
+      var blockedSite = blockedSites[i];
+      $("#blockSiteList").append('<li>' + blockedSite + '</li>');
     }
-    $('.header-blocked-sites').text(data.users.blockedDomains);
   });
 
 // function validateDistance() {
