@@ -68,13 +68,14 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1>
-                    <span class="header-content-inner-number"></span>
-                    miles to go
+                <h3>
+                    Your blocked sites:
+                    <br />
+                    <span class="header-blocked-sites"></span>
                     <hr>
                     <a href="#myData" class="btn btn-primary btn-xl
                         page-scroll">See My Progress</a>
-                </h1>
+                </h3
             </div>
         </div>
     </header>
@@ -83,10 +84,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <div id="distanceAlert" class="alert alert-warning">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>Warning!</strong> Please enter a vaild distance.
-                    </div>
                 <div id="status"></div>
                     <h3> Minium Distance to Bike</h3>
                          Distance: <br />
@@ -97,7 +94,9 @@
                     <div id="status"></div>
                         <h3> Add Blocked Site</h3>
                         Address: <br />
-                        <input type="text" id="address">
+                        www.
+                        <input type="text" id="domain">
+                        .com
                             <br />
                             <br />
             <input id="addSite" type="submit" value="Set">

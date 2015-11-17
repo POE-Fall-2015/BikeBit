@@ -1,4 +1,5 @@
 (function($) {
+  var blockedsites = []
   "use strict"; // Start of use strict
 
   //function for generation of random numbers
@@ -18,31 +19,40 @@
     $('.header-content-inner-number').text(data.distToGo);
   });
 
-function validateDistance() {
-    var distanceString = document.getElementById("distance").value;
-    var distance = parseInt(distanceString); // this parseInt does have limitations...
-    if (isNaN(distance) === true) { // check if number was entered
-        alert("Distance must be filled out");
-        $('alert alert-danger');
-        return false;
-    }
-    else {
-      chrome.runtime.onConnect.addListener(function(port){
-        port.postMessage({chosenDistance:distance}); //send message into port as chosenDistance, used in content.js
-      });
-    }
-}
+  $.get("/userStats", function(data){
+    $('.header-blocked-sites').text(data.users.blockedDomains);
+  });
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("setDistance").addEventListener("click", validateDistance);
-});
+// function validateDistance() {
+//     var distanceString = document.getElementById("distance").value;
+//     var distance = parseInt(distanceString); // this parseInt does have limitations...
+//     if (isNaN(distance) === true) { // check if number was entered
+//         alert("Distance must be filled out");
+//         $('alert alert-danger');
+//         return false;
+//     }
+//     else {
+//       chrome.runtime.onConnect.addListener(function(port){
+//         port.postMessage({chosenDistance:distance}); //send message into port as chosenDistance, used in content.js
+//       });
+//     }
+// }
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     document.getElementById("setDistance").addEventListener("click", validateDistance);
+// });
 
 function addSite() {
-    var newSite = document.getElementById("distance").value;
+    var newSite = document.getElementById("domain").value;
+    console.log(newSite);
+    $.ajax({
+      url:"/user", 
+      method: "PATCH",
+      data: { blockedDomains : newSite }});
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("addSite").addEventListener("click", validateForm);
+    document.getElementById("addSite").addEventListener("click", addSite);
 });
 
 })(jQuery); // End of use strict
