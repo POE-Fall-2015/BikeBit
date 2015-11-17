@@ -1,5 +1,4 @@
 (function($) {
-  var blockedsites = []
   "use strict"; // Start of use strict
 
   //function for generation of random numbers
@@ -20,6 +19,12 @@
   });
 
   $.get("/userStats", function(data){
+    var blockedSites = data.users.blockedDomains;
+
+    for(var i = 0; i < blockedSites.length; i++){
+      console.log(blockedSites[i]);
+
+    }
     $('.header-blocked-sites').text(data.users.blockedDomains);
   });
 
@@ -44,11 +49,22 @@
 
 function addSite() {
     var newSite = document.getElementById("domain").value;
-    console.log(newSite);
-    $.ajax({
-      url:"/user", 
-      method: "PATCH",
-      data: { blockedDomains : newSite }});
+    $.get("/userStats", function(data){
+      var currentlyBlocking = data.users.blockedDomains;
+      currentlyBlocking.push(newSite);
+      console.log(currentlyBlocking);
+      //console.log(newSite);  
+      $.ajax({
+        url:"/user", 
+        method: "PATCH",
+        data: { blockedDomains : currentlyBlocking }});
+    });
+    // console.log(currentlyBlocking);
+    // console.log(newSite);
+    // $.ajax({
+    //   url:"/user", 
+    //   method: "PATCH",
+    //   data: { blockedDomains : newSite }});
 }
 
 document.addEventListener("DOMContentLoaded", function() {
