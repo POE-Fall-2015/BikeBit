@@ -13,9 +13,8 @@
   var imageName = 'url(../img/header' + parseInt(randInt(0,2)) + '.jpg)';
   $('header').css({'background-image':imageName});
 
-  //populate the number of miles left to go
   $.get("/userStats", function(data){
-    $('.header-content-inner-number').text(data.distToGo);
+    $('.min-miles-number').text(data.users.goalDistance);
   });
 
   $.get("/userStats", function(data){
