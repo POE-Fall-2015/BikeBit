@@ -20,13 +20,30 @@
 
   $.get("/userStats", function(data){
     var blockedSites = data.users.blockedDomains;
-
+    console.log(blockedSites);
     for(var i = 0; i < blockedSites.length; i++){
       var blockedSite = blockedSites[i];
-      $("#blockSiteList").append('<li>' + blockedSite + '</li>');
+      $("#blockSiteList").append('<li>' + blockedSite + '   <div class="glyphicon glyphicon-remove"> </div>'+'</li>');
     }
   });
 
+  $('#blockSiteList').on('click', 'li', function(){
+    var site = $(this).index();
+    console.log(site);
+    removeSite(site);
+  })
+
+  function updateBlockedDomains(newBlockedDomains){
+    $("#blockSiteList").empty(); 
+    $.get("/userStats", function(data){
+      //var blockedSites = data.users.blockedDomains;
+      console.log(newBlockedDomains);
+      for(var i = 0; i < newBlockedDomains.length; i++){
+        var blockedSite = newBlockedDomains[i];
+        $("#blockSiteList").append('<li>' + blockedSite + '   <div class="glyphicon glyphicon-remove"> </div>'+'</li>');
+      }
+    });
+  }
 // function validateDistance() {
 //     var distanceString = document.getElementById("distance").value;
 //     var distance = parseInt(distanceString); // this parseInt does have limitations...
@@ -51,19 +68,34 @@ function addSite() {
     $.get("/userStats", function(data){
       var currentlyBlocking = data.users.blockedDomains;
       currentlyBlocking.push(newSite);
-      console.log(currentlyBlocking);
+      updateBlockedDomains(currentlyBlocking);
+      //console.log(currentlyBlocking);
       //console.log(newSite);  
       $.ajax({
         url:"/user", 
         method: "PATCH",
         data: { blockedDomains : currentlyBlocking }});
     });
-    // console.log(currentlyBlocking);
-    // console.log(newSite);
-    // $.ajax({
-    //   url:"/user", 
-    //   method: "PATCH",
-    //   data: { blockedDomains : newSite }});
+    // updateBlockedDomains(currentlyBlocking);
+}
+
+function removeSite(siteIndex) {
+  $.get("/userStats", function(data){
+    var currentlyBlocking = data.users.blockedDomains;
+    // var index = currentlyBlocking.indexOf(siteToDelete);
+    // if (index >= 0) {
+    //  arr.splice( index, 1 );
+    // }
+    currentlyBlocking.splice(siteIndex, 1);
+    updateBlockedDomains(currentlyBlocking);
+    console.log(currentlyBlocking);
+    //console.log(newSite);  
+    $.ajax({
+      url:"/user", 
+      method: "PATCH",
+      data: { blockedDomains : currentlyBlocking }});
+  });
+  // updateBlockedDomains(currentlyBlocking);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
