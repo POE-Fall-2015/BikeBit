@@ -13,10 +13,12 @@
   var imageName = 'url(../img/header' + parseInt(randInt(0,2)) + '.jpg)';
   $('header').css({'background-image':imageName});
 
+
   $.get("/userStats", function(data){
     $('.min-miles-number').text(data.users.goalDistance);
   });
 
+//sets blocked site list on open/refresh
   $.get("/userStats", function(data){
     var blockedSites = data.users.blockedDomains;
     console.log(blockedSites);
@@ -26,16 +28,10 @@
     }
   });
 
-  $('#blockSiteList').on('click', 'li', function(){
-    var site = $(this).index();
-    console.log(site);
-    removeSite(site);
-  })
-
+//updates block sites list to reflect adding/removing sites
   function updateBlockedDomains(newBlockedDomains){
     $("#blockSiteList").empty(); 
     $.get("/userStats", function(data){
-      //var blockedSites = data.users.blockedDomains;
       console.log(newBlockedDomains);
       for(var i = 0; i < newBlockedDomains.length; i++){
         var blockedSite = newBlockedDomains[i];
@@ -43,62 +39,66 @@
       }
     });
   }
-// function validateDistance() {
-//     var distanceString = document.getElementById("distance").value;
-//     var distance = parseInt(distanceString); // this parseInt does have limitations...
-//     if (isNaN(distance) === true) { // check if number was entered
-//         alert("Distance must be filled out");
-//         $('alert alert-danger');
-//         return false;
-//     }
-//     else {
-//       chrome.runtime.onConnect.addListener(function(port){
-//         port.postMessage({chosenDistance:distance}); //send message into port as chosenDistance, used in content.js
-//       });
-//     }
-// }
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     document.getElementById("setDistance").addEventListener("click", validateDistance);
-// });
+  function updateGoal(distance){
+    $('.min-miles-number').text(distance);
+  }
 
-function addSite() {
-    var newSite = document.getElementById("domain").value;
+  function validateDistance() {
+      var distanceString = document.getElementById("distance").value;
+      var distance = parseInt(distanceString); // this parseInt does have limitations...
+      if (isNaN(distance) === true) { // check if number was entered
+          alert("Distance must be filled out");
+          $('alert alert-danger');
+          return false;
+      }
+      else {
+        $.ajax({
+          url:"/user", 
+          method: "PATCH",
+          data: { goalDistance : distance }});
+        updateGoal(distance);
+      }
+  }
+
+  function addSite() {
+      var newSite = document.getElementById("domain").value;
+      $.get("/userStats", function(data){
+        var currentlyBlocking = data.users.blockedDomains;
+        currentlyBlocking.push(newSite);
+        updateBlockedDomains(currentlyBlocking);
+        $.ajax({
+          url:"/user", 
+          method: "PATCH",
+          data: { blockedDomains : currentlyBlocking }});
+      });
+  }
+
+  function removeSite(siteIndex) {
     $.get("/userStats", function(data){
       var currentlyBlocking = data.users.blockedDomains;
-      currentlyBlocking.push(newSite);
+      currentlyBlocking.splice(siteIndex, 1);
       updateBlockedDomains(currentlyBlocking);
-      //console.log(currentlyBlocking);
-      //console.log(newSite);  
+      console.log(currentlyBlocking);
       $.ajax({
         url:"/user", 
         method: "PATCH",
         data: { blockedDomains : currentlyBlocking }});
     });
-    // updateBlockedDomains(currentlyBlocking);
-}
+  }
 
-function removeSite(siteIndex) {
-  $.get("/userStats", function(data){
-    var currentlyBlocking = data.users.blockedDomains;
-    // var index = currentlyBlocking.indexOf(siteToDelete);
-    // if (index >= 0) {
-    //  arr.splice( index, 1 );
-    // }
-    currentlyBlocking.splice(siteIndex, 1);
-    updateBlockedDomains(currentlyBlocking);
-    console.log(currentlyBlocking);
-    //console.log(newSite);  
-    $.ajax({
-      url:"/user", 
-      method: "PATCH",
-      data: { blockedDomains : currentlyBlocking }});
+  $('#blockSiteList').on('click', 'li', function(){
+    var site = $(this).index();
+    console.log(site);
+    removeSite(site);
+  })
+
+  document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("addSite").addEventListener("click", addSite);
   });
-  // updateBlockedDomains(currentlyBlocking);
-}
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("addSite").addEventListener("click", addSite);
-});
+  document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("setDistance").addEventListener("click", validateDistance);
+  });
 
 })(jQuery); // End of use strict
