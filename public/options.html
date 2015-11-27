@@ -83,10 +83,14 @@
                         <ul id="blockSiteList" style="list-style-type:none">
                         </ul>
                     <hr>
-                    <a href="#myData" class="btn btn-primary btn-xl
-                        page-scroll">See My Progress</a>
                 </h3>
+                <h6>
+                    <div class="alert alert-warning" id="cant-remove-site" style="display:none">
+                          You can't remove sites until you complete your goal for this cycle.
+                    </div>
+                </h6>
             </div>
+            <a href="#myData" class="btn btn-primary btn-xl page-scroll">Change Settings</a>
         </div>
         </div>
     </header>
@@ -174,8 +178,7 @@
                     Diameter: 
                     <br />
                     <br />
-                    <input class="form-control" type="text" id="diameter" placeholder="inches">
-                    <!-- <span class="help-block">Don't worry if you don't know your wheel diameter- we'll assume your's 26 inches like most bikes!</span> -->
+                    <input class="form-control" type="text" id="diameter">
                         <br />
                     <input id="setDiameter" type="submit" value="Set">
                         <br />
