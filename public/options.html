@@ -100,52 +100,94 @@
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6 text-center">
                         <h3> Minimum Distance to Bike</h3>
-                           Distance: <br />
-                        <input type="text" id="distance"> mile(s)
+                        <div class="alert alert-warning" id="cant-change-warning" style="display:none">
+                          You can't change your goal distance until you complete your goal for this cycle.
+                        </div>
+                           Distance: 
+                           <br />
+                           <br />
+                            <div class="col-xs-4"> </div>
+                            <div class="col-xs-4">
+                                <input class="form-control" type="text" id="distance" placeholder="miles">
+                                <br />
+                                <input id="setDistance" type="submit" value="Set">
+                            </div>
                             <br />
                             <br />
-                        <input id="setDistance" type="submit" value="Set">
+                        <br />
+                        <br />
+                        <br />
+                        <div class="btn-group" id="goalRate" data-toggle="buttons">
+                            <label class="radio-inline"><input id="day" type="radio" name="rate" value="day"> Daily</label>
+                            <label class="radio-inline"><input id="week" type="radio" name="rate" value="week">Weekly</label>
+                        </div>
+                        <!-- <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="wheel-measurement"></span>
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Inches</a></li>
+                            <li><a href="#">Centimeters</a></li>
+                          </ul>
+                        </div> -->
                     </div>
                     <div class="col-xs-6">
                         <h3> Add Blocked Site</h3>
-                        Address: <br />
-                        www.
-                        <input type="text" id="domain">
-                        .com                           
+                        Address: 
                         <br />
                         <br />
-                    <input id="addSite" type="submit" value="Set">
+                        <div class="col-xs-2">
+                            www.
+                        </div>
+                        <div class="col-xs-8"> 
+                            <input class="form-control" type="text" id="domain"placeholder="Enter New Domain">
+                        </div>
+                        <div class="col-xs-1">.com </div>              
+                        <br />
+                        <br />
+                        <br />
+                    <input id="addSite" type="submit" value="Add Blocked Site">
                     </div>
                     </div>
                 </div>
             </div>
         </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <br />
+                <br />
+                <h3 class="section-heading">More Customization</h3>
+                <hr class="primary">         
+                <font size="4"> Wheel Diameter </font>
+                    <br />
+                    <br />
+<!--                     <div class="col-xs-2 text-center">
+                      <label for="ex1">col-xs-2</label>
+                      <input class="form-control" id="ex1" type="text">
+                    </div> -->
+                <div class="col-xs-3"> </div>
+                <div class="col-xs-3">
+                    Diameter: 
+                    <br />
+                    <br />
+                    <input class="form-control" type="text" id="diameter" placeholder="inches">
+                    <!-- <span class="help-block">Don't worry if you don't know your wheel diameter- we'll assume your's 26 inches like most bikes!</span> -->
+                        <br />
+                    <input id="setDiameter" type="submit" value="Set">
+                        <br />
+                        <br />
+                </div>
+                <div class="col-xs-3">
+                    Don't worry if you don't know your wheel diameter- we'll assume your's 26 inches like most bikes!
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!--         <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <div id="status"></div>
-                        <h3> Minium Distance to Bike</h3>
-                           Distance: <br />
-                        <input type="text" id="distance"> mile(s)
-                            <br />
-                            <br />
-                        <input id="setDistance" type="submit" value="Set">
-                    <div id="status"></div>
-                        <h3> Add Blocked Site</h3>
-                        Address: <br />
-                        www.
-                        <input type="text" id="domain">
-                        .com                           
-                        <br />
-                        <br />
-                    <input id="addSite" type="submit" value="Set">
-                </div>
-            </div>
-        </div>
-    </section> -->
         <!--
         <div class="container">
             <div class="row">
