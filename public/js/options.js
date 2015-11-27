@@ -17,6 +17,16 @@
     $('.min-miles-number').text(data.users.goalDistance);
   });
 
+  $.get("/userStats", function(data){
+    if (data.distToGo > 0){
+      $('#distance').prop('disabled', true);
+      $('#setDistance').prop('disabled', true);
+      $('#day').prop('disabled', true);
+      $('#week').prop('disabled', true);
+      $('#cant-change-warning').toggle();
+    }
+  });
+
 // GOAL RATE
 
   function setGoalRate(){
