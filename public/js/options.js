@@ -57,6 +57,10 @@
 
 // BLOCKED DOMAINS
 
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+
 //updates block sites list to reflect adding/removing sites
   function updateBlockedDomains(newBlockedDomains){
     $("#blockSiteList").empty();

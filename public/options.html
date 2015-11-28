@@ -24,6 +24,13 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/creative.css" type="text/css">
+    <style>
+        .popover-content {
+          background-color: DarkSlateGray;
+          color: #FFFFFF;
+          padding: 5px;
+        }
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -77,17 +84,21 @@
                 </h1>
             </div>
             <div class="col-xs-6">
+<!--                 <a href="#" data-toggle="popover" data-content="You can't remove sites until you complete your goal for this cycle." data-placement="bottom" data-trigger="hover" > -->
                 <h3>
                     Your blocked sites:
+<!--                 </h3>
+                </a>
+                <h3> -->
                     <br />
                         <ul id="blockSiteList" style="list-style-type:none">
                         </ul>
                     <hr>
                 </h3>
                 <h6>
-                    <div class="alert alert-warning" id="cant-remove-site" style="display:none">
+  <!--                   <div class="alert alert-warning" id="cant-remove-site" style="display:none">
                           You can't remove sites until you complete your goal for this cycle.
-                    </div>
+                    </div> -->
                 </h6>
             </div>
             <a href="#myData" class="btn btn-primary btn-xl page-scroll">Change Settings</a>
