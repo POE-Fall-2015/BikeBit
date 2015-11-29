@@ -15,7 +15,8 @@
 
   //populate the number of miles left to go
   $.get("/userStats", function(data){
-    $('.header-content-inner-number').text(data.distToGo);
+    var distanceLeft = (data.distToGo).toFixed(2).replace(/\.?0+$/, "");
+    $('.header-content-inner-number').text(distanceLeft);
   });
 
   //holds the bar chart object
