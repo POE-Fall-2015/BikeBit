@@ -125,9 +125,21 @@
                            <br />
                             <div class="col-xs-4"> </div>
                             <div class="col-xs-4">
-                                <input class="form-control" type="text" id="distance" placeholder="miles">
+                                <input class="form-control" type="text" id="distance">
                                 <br />
                                 <input id="setDistance" type="submit" value="Set">
+                            </div>
+                            <div class="col-xs-1">
+                                <div class="dropdown">
+                                  <button class="btn btn-default dropdown-toggle" type="button" id="distance-units-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="distance-units"></span>
+                                    <span class="caret"></span>
+                                  </button>
+                                  <ul id="distance-units-drop" class="dropdown-menu" aria-labelledby="distance-units-button">
+                                    <li><a>miles</a></li>
+                                    <li><a>km</a></li>
+                                  </ul>
+                                </div>
                             </div>
                             <br />
                             <br />
@@ -137,17 +149,7 @@
                         <div class="btn-group" id="goalRate" data-toggle="buttons">
                             <label class="radio-inline"><input id="day" type="radio" name="rate" value="day"> Daily</label>
                             <label class="radio-inline"><input id="week" type="radio" name="rate" value="week">Weekly</label>
-                        </div>
-                        <!-- <div class="dropdown">
-                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span class="wheel-measurement"></span>
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Inches</a></li>
-                            <li><a href="#">Centimeters</a></li>
-                          </ul>
-                        </div> -->
+                        </div>                        
                     </div>
                     <div class="col-xs-6">
                         <h3> Add Blocked Site</h3>
