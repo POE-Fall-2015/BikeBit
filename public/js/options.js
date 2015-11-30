@@ -20,6 +20,7 @@
       $('#setDistance').prop('disabled', true);
       $('#day').prop('disabled', true);
       $('#week').prop('disabled', true);
+      $('#distance-units-button').prop('disabled', true);
       $('#cant-change-warning').toggle();
       $('#cant-remove-site').toggle();
     }
@@ -120,6 +121,23 @@ $(document).ready(function(){
   }
 
 // GOAL DISTANCE
+
+  $.get("/userStats", function(data){
+    $('.distance-units').text(data.users.goalUnits);
+    if (isNaN(data.users.goalDistance) === false){ 
+      $('#distance').prop('placeholder', data.users.goalDistance.toString() + " " + data.users.goalUnits);
+    }
+  });
+
+  $('#distance-units-drop li').on('click', function(){
+      var units = $(this).text().toLowerCase();
+      console.log(units);
+      $.ajax({
+        url:"/user", 
+        method: "PATCH",
+        data: { goalUnits : units }});
+    });
+
   function updateGoal(distance){
     $('.min-miles-number').text(distance);
   }
