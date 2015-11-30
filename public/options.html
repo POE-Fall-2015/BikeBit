@@ -24,6 +24,13 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/creative.css" type="text/css">
+    <style>
+        .popover-content {
+          background-color: DarkSlateGray;
+          color: #FFFFFF;
+          padding: 5px;
+        }
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,10 +60,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="#settings">Settings</a>
+                        <a class="page-scroll" href="#Options">Options</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#myData">My Data</a>
+                        <a class="page-scroll" href="/dashboard">My Data</a>
                     </li>
                 </ul>
             </div>
@@ -77,21 +84,29 @@
                 </h1>
             </div>
             <div class="col-xs-6">
+<!--                 <a href="#" data-toggle="popover" data-content="You can't remove sites until you complete your goal for this cycle." data-placement="bottom" data-trigger="hover" > -->
                 <h3>
                     Your blocked sites:
+<!--                 </h3>
+                </a>
+                <h3> -->
                     <br />
                         <ul id="blockSiteList" style="list-style-type:none">
                         </ul>
                     <hr>
-                    <a href="#myData" class="btn btn-primary btn-xl
-                        page-scroll">See My Progress</a>
                 </h3>
+                <h6>
+  <!--                   <div class="alert alert-warning" id="cant-remove-site" style="display:none">
+                          You can't remove sites until you complete your goal for this cycle.
+                    </div> -->
+                </h6>
             </div>
+            <a href="#Options" class="btn btn-primary btn-xl page-scroll">Change Settings</a>
         </div>
         </div>
     </header>
 
-    <section id="services">
+    <section id="Options">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -174,8 +189,7 @@
                     Diameter: 
                     <br />
                     <br />
-                    <input class="form-control" type="text" id="diameter" placeholder="inches">
-                    <!-- <span class="help-block">Don't worry if you don't know your wheel diameter- we'll assume your's 26 inches like most bikes!</span> -->
+                    <input class="form-control" type="text" id="diameter">
                         <br />
                     <input id="setDiameter" type="submit" value="Set">
                         <br />

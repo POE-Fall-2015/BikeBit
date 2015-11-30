@@ -19,6 +19,19 @@ function getMonday() {
   return date;
 }
 
+function getMondayBefore(time) {
+  //returns first monday before time specified in ms
+  var date = new Date();
+  date.setTime(time);
+  var day = date.getDay() || 7;  
+  if( day !== 1 ) 
+    date.setHours(-24 * (day - 1)); 
+  date.setHours(0);
+  date.setMinutes(0);
+  date.setSeconds(0);
+  return date;
+}
+
 function getTimeRangeSessions(beg,end,callback){
   //returns all bikesessions that fall in time range
   //and calls callback with list of those sessions
@@ -137,4 +150,85 @@ var getUserStats = function(req, res){
   });
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function addDays(date, daysToAdd)
+{
+    var dat = new Date(date.getTime());
+    dat.setDate(dat.getDate() + daysToAdd);
+    return dat;
+}
+
+function getXLabels(monday){
+  //returns date in format 09/08, 09/10, ... for the week, starting at monday
+  //datetime object given
+  var xlabels = [];
+  for(var i = 0; i < 7 ; i++){
+    var day = addDays(monday,i);
+    var xlabel = day.getMonth()+1 +"/"+ day.getDate();
+    xlabels.push(xlabel)
+  }
+  return xlabels;
+}
+
+var getGraphData = function(req, res){
+  var graphTime = req.query.graphTime;
+  var beginTime = getMondayBefore(graphTime);
+  var endTime = addDays(beginTime,7);
+  var xlabels = getXLabels(beginTime);
+  //get user info so we know what goalRate and goalDistance are
+  getUser(req, function(err, users){
+    if(err){ res.status(500).send("Error getting users!"); console.log(err); }
+    var goalRate = users[0].goalRate;
+    var goalUnits = users[0].goalUnits;
+    var goalDistance = users[0].goalDistance;
+    var graphTitle;
+    var goalLabel = "Goal: " + goalDistance + " " + goalUnits;
+    if(goalRate === "week"){
+      graphTitle = "Cumulative " + goalUnits + " biked the week of " + xlabels[0];
+    } else if (goalRate === "day"){
+      graphTitle = goalUnits + " biked the week of " + xlabels[0];
+    } else {
+      console.log("WARNING! goalRate is not valid!");
+    }
+    getTimeRangeSessions(beginTime,endTime,function(err, bikeSessions){
+      if(err){ res.status(500).send("Error getting sessions!"); console.log(err); }
+      var ys = [];
+      for(var i = 0; i < 7; i++){
+        var begDate = addDays(beginTime,i);
+        var endDate = addDays(beginTime,i+1);
+        var filterDates = function(session){
+          if(goalRate === "week"){
+            //we want cumulative distance to display if goal is weekly
+            return (session.createdAt < endDate);
+          } else if (goalRate === "day"){
+            return (session.createdAt < endDate) && (val.createdAt > begDate);
+          } else {
+            return null;
+            console.log("WARNING! goalRate is not valid!");
+          }
+        }
+        var filteredSessions = bikeSessions.filter(filterDates);
+        var rotations = 0;
+        filteredSessions.forEach(function(session){
+          rotations += session.rotations;
+        });
+        var dist = rotationsToDistance(rotations,users[0]);
+        ys.push(dist);
+      }
+      var graphData = {
+        xlabels: xlabels,
+        ys: ys,
+        goal: goalDistance,
+        goalLabel: goalLabel,
+        graphTitle: graphTitle,
+      };
+      res.status(200).send(graphData);
+    });
+  });
+}
+
 module.exports.getUserStats = getUserStats;
+module.exports.getGraphData = getGraphData;

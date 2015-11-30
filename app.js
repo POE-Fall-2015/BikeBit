@@ -38,6 +38,7 @@ app.get('/options', function(req, res){
 });
 
 //API routes
+app.get('/graphData', ParseData.getGraphData);
 app.get('/userStats', ParseData.getUserStats);
 app.get('/bikeSession', BikeSession.getSessions);
 app.post('/bikeSession', BikeSession.postSession);
