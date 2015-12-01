@@ -115,7 +115,12 @@ var putUser = function(req, res){
               user.blockedDomains = req.body.blockedDomains;
           }
           if (req.body['blockedDomains[]']) {
-            user.blockedDomains = req.body['blockedDomains[]'];
+            if (req.body['blockedDomains[]'] == "0"){
+              user.blockedDomains = [];
+            }
+            else{
+              user.blockedDomains = req.body['blockedDomains[]'];
+            }
           }
           user.updatedAt = Date.now();
           user.save(function(err) {

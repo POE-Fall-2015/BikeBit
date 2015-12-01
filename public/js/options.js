@@ -112,11 +112,11 @@ $(document).ready(function(){
       var currentlyBlocking = data.users.blockedDomains;
       currentlyBlocking.splice(siteIndex, 1);
       updateBlockedDomains(currentlyBlocking);
-      console.log(currentlyBlocking);
+      currentlyBlocking = [0];
       $.ajax({
         url:"/user", 
         method: "PATCH",
-        data: { blockedDomains : currentlyBlocking }});
+        data: { blockedDomains : currentlyBlocking}});
     });
   }
 
