@@ -42,6 +42,12 @@ function validateUser(res, user, callback){
       return;
     }
   }
+  if(user.wheelSize){
+    if(user.wheelSize <= 0){
+      res.status(400).send("Invalid user goalUnits!");
+      return;
+    }
+  }
   callback();
 }
 
