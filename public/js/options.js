@@ -122,20 +122,25 @@ $(document).ready(function(){
 
 // GOAL DISTANCE
 
+function updateGoalPlaceholder(){
   $.get("/userStats", function(data){
     $('.distance-units').text(data.users.goalUnits);
     if (isNaN(data.users.goalDistance) === false){ 
       $('#distance').prop('placeholder', data.users.goalDistance.toString() + " " + data.users.goalUnits);
     }
   });
+}
+
+updateGoalPlaceholder();
 
   $('#distance-units-drop li').on('click', function(){
-      var units = $(this).text().toLowerCase();
-      console.log(units);
-      $.ajax({
-        url:"/user", 
-        method: "PATCH",
-        data: { goalUnits : units }});
+    var units = $(this).text().toLowerCase();
+    console.log(units);
+    $.ajax({
+      url:"/user", 
+      method: "PATCH",
+      data: { goalUnits : units }});
+    updateGoalPlaceholder();
     });
 
   function updateGoal(distance){
@@ -156,6 +161,7 @@ $(document).ready(function(){
           method: "PATCH",
           data: { goalDistance : distance }});
         updateGoal(distance);
+        updateGoalPlaceholder();
       }
   }
 
