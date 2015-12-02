@@ -196,6 +196,7 @@ var getGraphData = function(req, res){
     getTimeRangeSessions(beginTime,endTime,function(err, bikeSessions){
       if(err){ res.status(500).send("Error getting sessions!"); console.log(err); }
       var ys = [];
+      var today = new Date();
       for(var i = 0; i < 7; i++){
         var begDate = addDays(beginTime,i);
         var endDate = addDays(beginTime,i+1);
@@ -216,7 +217,11 @@ var getGraphData = function(req, res){
           rotations += session.rotations;
         });
         var dist = rotationsToDistance(rotations,users[0]);
-        ys.push(dist);
+        if(begDate > today){
+          ys.push(0);
+        } else {
+          ys.push(dist);
+        }
       }
       var graphData = {
         xlabels: xlabels,
