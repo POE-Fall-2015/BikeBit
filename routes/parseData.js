@@ -217,7 +217,7 @@ var getGraphData = function(req, res){
           rotations += session.rotations;
         });
         var dist = rotationsToDistance(rotations,users[0]);
-        if(endDate > today){
+        if(begDate > today){
           ys.push(0);
         } else {
           ys.push(dist);
