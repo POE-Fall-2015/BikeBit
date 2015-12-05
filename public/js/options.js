@@ -23,6 +23,7 @@
       $('#distance-units-button').prop('disabled', true);
       $('#cant-change-warning').toggle();
       $('#cant-remove-site').toggle();
+      $('#modalSet').prop('disabled', true);
     }
   });
 
@@ -53,16 +54,8 @@
    updateGoalRate(this.value);
   })
 
- //var filterDay = $('#goalRate input:radio:checked').val();
- // console.log(filterDay);
-
-// BLOCKED DOMAINS
-
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
-});
-
-//updates block sites list to reflect adding/removing sites
+  // BLOCKED SITES
+  //updates block sites list to reflect adding/removing sites
   function updateBlockedDomains(newBlockedDomains){
     $("#blockSiteList").empty();
     $.get("/userStats", function(data){
@@ -151,7 +144,7 @@ updateGoalPlaceholder();
       var distanceString = document.getElementById("distance").value;
       var distance = parseInt(distanceString); // this parseInt does have limitations...
       if (isNaN(distance) === true) { // check if number was entered
-          alert("Distance must be filled out");
+          alert("Distance must be filled out to set.");
           $('alert alert-danger');
           return false;
       }
