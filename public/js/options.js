@@ -14,7 +14,7 @@
   $('header').css({'background-image':imageName});
 
   $.get("/userStats", function(data){
-    $('.min-miles-number').text(data.users.goalDistance);
+    $('.min-miles-number').text(data.users.goalDistance + " " + data.users.goalUnits);
     if (data.distToGo > 0){
       $('#distance').prop('disabled', true);
       $('#setDistance').prop('disabled', true);
@@ -62,10 +62,10 @@
       for(var i = 0; i < newBlockedDomains.length; i++){
         var blockedSite = newBlockedDomains[i];
         if (data.distToGo <= 0){
-          $("#blockSiteList").append('<li>' + blockedSite + '   <div class="glyphicon glyphicon-remove"> </div>'+'</li>');
+          $("#blockSiteList").prepend('<li>' + blockedSite + '   <div class="glyphicon glyphicon-remove"> </div>'+'</li>');
         }
         else{
-          $("#blockSiteList").append('<li>' + blockedSite + '</li>');
+          $("#blockSiteList").prepend('<li>' + blockedSite + '</li>');
         }
       }
     });
@@ -136,12 +136,13 @@ updateGoalPlaceholder();
     updateGoalPlaceholder();
     });
 
-  function updateGoal(distance){
-    $('.min-miles-number').text(distance);
+  function updateGoal(distance, units){
+    $('.min-miles-number').text(distance + " " + units);
   }
 
   function validateDistance() {
       var distanceString = document.getElementById("distance").value;
+      var units = $('#distnace-units-drop li').text().toLowerCase();
       var distance = parseInt(distanceString); // this parseInt does have limitations...
       if (isNaN(distance) === true) { // check if number was entered
           alert("Distance must be filled out to set.");
@@ -153,7 +154,7 @@ updateGoalPlaceholder();
           url:"/user", 
           method: "PATCH",
           data: { goalDistance : distance }});
-        updateGoal(distance);
+        updateGoal(distance, units);
         updateGoalPlaceholder();
       }
   }
