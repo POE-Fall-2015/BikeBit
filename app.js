@@ -30,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname,'public','img','favicon.ico')));
 
 //User facing web app pages
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname,'public','dashboard.html'));
+});
 app.get('/dashboard', function(req, res){
   res.sendFile(path.join(__dirname,'public','dashboard.html'));
 });
