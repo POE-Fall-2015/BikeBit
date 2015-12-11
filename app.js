@@ -11,6 +11,10 @@ var favicon = require('serve-favicon');
 var ParseData = require('./routes/parseData.js');
 var BikeSession = require('./routes/bikeSession.js');
 var User = require('./routes/user.js');
+var connect = require("connect");
+var slashes = require("connect-slashes");
+
+// connect().use(slashes(false));
 
 
 //port configuration for heroku
@@ -28,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname,'public','img','favicon.ico')));
+app.use(slashes(false));
 
 //User facing web app pages
 app.get('/', function(req, res){
