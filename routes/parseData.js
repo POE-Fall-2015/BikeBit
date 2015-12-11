@@ -173,6 +173,10 @@ function getXLabels(monday){
   return xlabels;
 }
 
+function capitalizeFirstLetter(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 var getGraphData = function(req, res){
   var graphTime = req.query.graphTime;
   var beginTime = getMondayBefore(graphTime);
@@ -193,6 +197,7 @@ var getGraphData = function(req, res){
     } else {
       console.log("WARNING! goalRate is not valid!");
     }
+    graphTitle = capitalizeFirstLetter(graphTitle);
     getTimeRangeSessions(beginTime,endTime,function(err, bikeSessions){
       if(err){ res.status(500).send("Error getting sessions!"); console.log(err); }
       var ys = [];
@@ -205,7 +210,7 @@ var getGraphData = function(req, res){
             //we want cumulative distance to display if goal is weekly
             return (session.createdAt < endDate);
           } else if (goalRate === "day"){
-            return (session.createdAt < endDate) && (val.createdAt > begDate);
+            return (session.createdAt < endDate) && (session.createdAt > begDate);
           } else {
             return null;
             console.log("WARNING! goalRate is not valid!");

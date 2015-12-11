@@ -15,8 +15,14 @@
 
   //populate the number of miles left to go
   $.get("/userStats", function(data){
-    var distanceLeft = (data.distToGo).toFixed(2).replace(/\.?0+$/, "");
-    $('.header-content-inner-number').text(distanceLeft);
+    var distMsg;
+    var distUnits = data.users.goalUnits;
+    if(data.distToGo < 1){
+      distMsg = "Less than 1 " + distUnits + " to go!";
+    } else {
+      distMsg = ((data.distToGo).toFixed(2).replace(/\.?0+$/, "")) + " " + distUnits + " to go!";
+    }
+    $('.header-content-inner-number').text(distMsg);
   });
 
   //holds the bar chart object
@@ -95,7 +101,7 @@
             var linePos = scale.calculateY(this.options.lineAtPos);
             // draw line
             this.chart.ctx.beginPath();
-            this.chart.ctx.moveTo(scale.startPoint+20, linePos);
+            this.chart.ctx.moveTo(scale.startPoint+40, linePos);
             this.chart.ctx.strokeStyle = '#000000';
             this.chart.ctx.lineTo(this.chart.width, linePos);
             this.chart.ctx.stroke();
@@ -107,7 +113,7 @@
               // draw label next to goal line
               var lineLabel = this.options.lineLabel;
               this.chart.ctx.fillStyle = '#000000';
-              this.chart.ctx.fillText(lineLabel, scale.startPoint + 80, linePos+15);
+              this.chart.ctx.fillText(lineLabel, scale.endPoint, linePos-15);
             } else {
               // draw label in specific place
               var lineLabel = this.options.lineLabel;
