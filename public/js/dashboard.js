@@ -18,6 +18,7 @@
     var distMsg;
     var distUnits = data.users.goalUnits;
     if(data.distToGo < 1){
+      distUnits = distUnits.substring(0,distUnits.length-1);
       distMsg = "Less than 1 " + distUnits + " to go!";
     } else {
       distMsg = ((data.distToGo).toFixed(2).replace(/\.?0+$/, "")) + " " + distUnits + " to go!";

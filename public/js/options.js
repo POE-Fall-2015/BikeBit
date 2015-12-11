@@ -15,16 +15,16 @@
 
   $.get("/userStats", function(data){
     $('.min-miles-number').text(data.users.goalDistance + " " + data.users.goalUnits);
-    //if (data.distToGo > 0){
-    //  $('#distance').prop('disabled', true);
-    //  $('#setDistance').prop('disabled', true);
-    //  $('#day').prop('disabled', true);
-    //  $('#week').prop('disabled', true);
-    //  $('#distance-units-button').prop('disabled', true);
-    //  $('#cant-change-warning').toggle();
-    //  $('#cant-remove-site').toggle();
-    //  $('#modalSet').prop('disabled', true);
-    //}
+    if (data.distToGo > 0){
+      $('#distance').prop('disabled', true);
+      $('#setDistance').prop('disabled', true);
+      $('#day').prop('disabled', true);
+      $('#week').prop('disabled', true);
+      $('#distance-units-button').prop('disabled', true);
+      $('#cant-change-warning').toggle();
+      $('#cant-remove-site').toggle();
+      $('#modalSet').prop('disabled', true);
+    }
   });
 
 // GOAL RATE
@@ -61,12 +61,12 @@
     $.get("/userStats", function(data){
       for(var i = 0; i < newBlockedDomains.length; i++){
         var blockedSite = newBlockedDomains[i];
-        //if (data.distToGo <= 0){
+        if (data.distToGo <= 0){
           $("#blockSiteList").prepend('<li>' + blockedSite + '   <div class="glyphicon glyphicon-remove"> </div>'+'</li>');
-        //}
-        //else{
-        //  $("#blockSiteList").prepend('<li>' + blockedSite + '</li>');
-        //}
+        }
+        else{
+          $("#blockSiteList").prepend('<li>' + blockedSite + '</li>');
+        }
       }
     });
   }
@@ -75,12 +75,12 @@
   $.get("/userStats", function(data){
     var blockedSites = data.users.blockedDomains;
     updateBlockedDomains(blockedSites)
-    //if (data.distToGo <= 0){
+    if (data.distToGo <= 0){
       $('#blockSiteList').on('click', 'li', function(){
         var site = $(this).index();
         removeSite(site);
       })
-    //}
+    }
   });
 
   function addSite() {
