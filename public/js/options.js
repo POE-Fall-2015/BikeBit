@@ -142,7 +142,7 @@ updateGoalPlaceholder();
 
   function validateDistance() {
       var distanceString = document.getElementById("distance").value;
-      var distance = parseInt(distanceString); // this parseInt does have limitations...
+      var distance = parseFloat(distanceString); // this parseInt does have limitations...
       if (isNaN(distance) === true) { // check if number was entered
           alert("Distance must be filled out to set.");
           $('alert alert-danger');
