@@ -73,14 +73,15 @@ function getLifetimeRotations(callback){
 }
 
 function rotationsToDistance(rotations,user){
-  var measureWheelSize = 3; //inches
+  var measureWheelSize = user.wheelSize;
   var inchesPerMile = 63360.0;
   var inchesPerKm = 39370.0;
+  var pi = 3.14159265359;
   var goalUnits = user.goalUnits
   if(goalUnits === "miles") {
-    return rotations * measureWheelSize / inchesPerMile;
+    return rotations * measureWheelSize * pi / inchesPerMile;
   } else if (goalUnits === "kilometers") {
-    return rotations * measureWheelSize / inchesPerKm;
+    return rotations * measureWheelSize * pi / inchesPerKm;
   } else {
     console.log("Err in rotationsToDistance, goalUnits not valid!");
     return null;
