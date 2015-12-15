@@ -163,32 +163,4 @@ updateGoalPlaceholder();
       document.getElementById("setDistance").addEventListener("click", validateDistance);
   });
 
-  // WHEEL DIAMETER
-
-  $.get("/userStats", function(data){
-    if (isNaN(data.users.wheelSize) === false){ 
-      $('#diameter').prop('placeholder', data.users.wheelSize + ' inches');
-    }
-  });
-
-  function validateDiameter() {
-      var diameterString = document.getElementById("diameter").value;
-      var diameter = parseInt(diameterString); // this parseInt does have limitations...
-      if (isNaN(diameter) === true) { // check if number was entered
-          alert("Distance must be filled out");
-          $('alert alert-danger');
-          return false;
-      }
-      else {
-        $.ajax({
-          url:"/user", 
-          method: "PATCH",
-          data: { wheelSize : diameter }});
-      }
-  }
-
-  document.addEventListener("DOMContentLoaded", function() {
-      document.getElementById("setDiameter").addEventListener("click", validateDiameter);
-  });
-
 })(jQuery); // End of use strict
