@@ -17,7 +17,10 @@
   $.get("/userStats", function(data){
     var distMsg;
     var distUnits = data.users.goalUnits;
-    if(data.distToGo < 1){
+    if(data.distToGo < 0) {
+      distMsg = "You reached your goal!";
+    }
+    else if(data.distToGo < 1){
       distUnits = distUnits.substring(0,distUnits.length-1);
       distMsg = "Less than 1 " + distUnits + " to go!";
     } else {
